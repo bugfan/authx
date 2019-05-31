@@ -10,6 +10,7 @@ import (
 )
 
 func main() {
+	// init database
 	_, err := models.SetEngine(&models.Config{
 		User:     settings.Get("db_user"),
 		Password: settings.Get("db_password"),
@@ -20,5 +21,6 @@ func main() {
 	if err != nil {
 		os.Exit(-1)
 	}
+	// run api server
 	apis.NewAPIServer().G.Run(":9991")
 }
