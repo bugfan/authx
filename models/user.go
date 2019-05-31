@@ -9,6 +9,17 @@ func init() {
 	Register(new(User))
 }
 
+func initDefaultUser() {
+	user := User{
+		Name:     "admin",
+		Password: "123456",
+	}
+	has, _ := x.Where("name=?", user.Name).Exist(&user)
+	if !has {
+		x.Insert(&user)
+	}
+}
+
 type User struct {
 	ID       int64
 	Name     string

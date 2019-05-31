@@ -4,16 +4,12 @@ import (
 	"errors"
 	"fmt"
 	"math/rand"
-	"net/http"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
 )
 
 var secret string
-
-const cookieName = "_auth"
-const cacheMaxMem = 1 * 1024 * 1024
 
 func init() {
 	letterRunes := []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
@@ -24,24 +20,6 @@ func init() {
 	secret = string(b)
 }
 
-func SetJWTCookie(res http.ResponseWriter, attr map[string]string) error {
-	jwtStr, err := GenJWT(attr)
-	if err != nil {
-		return err
-	}
-	expire := time.Now().Add(24 * 60 * time.Minute)
-	cookie := &http.Cookie{Name: cookieName, Value: jwtStr, Expires: expire, Path: "/", HttpOnly: true}
-	http.SetCookie(res, cookie)
-}
-func GetJWTCookie(req http.Request) (map[string]string, error) {
-	cookie, err := req.Cookie(cookieName)
-	if err != nil {
-		return nil, err
-	}
-
-	jwtString := cookie.Value
-	return VerifyJWT(jwtString)
-}
 func GenJWT(attr map[string]string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"foo":       "bar",

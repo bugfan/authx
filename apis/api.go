@@ -25,9 +25,9 @@ func NewAPIServer() *APIServer {
 	api := s.G.Group("/api")
 	api = api.Group("/auth")
 	{
-		api.GET("/login", user.Login)
-		api.GET("/logout", user.Logout)
-		api.GET("/logon", user.Logon)
+		api.POST("/login", user.Login)
+		api.POST("/logout", user.Logout)
+		api.POST("/logon", user.Logon)
 	}
 	return s
 }

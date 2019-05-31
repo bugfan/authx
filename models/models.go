@@ -65,8 +65,14 @@ func SetEngine(config *Config) (*xorm.Engine, error) {
 	if err = x.StoreEngine("InnoDB").Sync2(tables...); err != nil {
 		return nil, fmt.Errorf("sync database struct error: %v\n", err)
 	}
+	initDefalutData()
 	return x, nil
 }
+
+func initDefalutData() {
+	initDefaultUser()
+}
+
 func All(obj interface{}) error {
 	return x.Find(obj)
 }
