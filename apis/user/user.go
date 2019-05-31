@@ -1,8 +1,8 @@
 package user
 
 import (
+	"authx/models"
 	"net/http"
-	"s002/models"
 
 	"github.com/gin-gonic/gin"
 )
