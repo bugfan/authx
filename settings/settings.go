@@ -1,5 +1,10 @@
 package settings
 
+import (
+	"os"
+	"strings"
+)
+
 var defaults map[string]string
 
 func init() {
@@ -14,5 +19,9 @@ func init() {
 	}
 }
 func Get(key string) string {
+	env := strings.TrimSpace(os.Getenv(key))
+	if env != "" {
+		return env
+	}
 	return defaults[key]
 }
