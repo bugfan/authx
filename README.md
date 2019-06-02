@@ -8,7 +8,25 @@
 5. 用户密码经过加密存储
 
 ### 使用方法
- `go run main.go` or `当作库引进来调用mian里面的api即可`
+1. 切换到此目录执行 `go test` 
+2. 执行 `go get -u github.com/bugfan/authx` 在你的代码里面引用此库，例如:
+`
+    import (
+	    "github.com/bugfan/authx"
+    )
+    func main() {
+        authx.Run() //运行authx 
+    }
+`
 
-## 特别说明 
-1. 近期会一直更新，直到全部完成
+### 环境变量
+`
+        "db_user":     "root",
+		"db_password": "123456",
+		"db_host":     "127.0.0.1:3306",
+		"db_name":     "authx",
+		"db_log":      "xorm.log",
+		"authx_host":  "localhost",
+		"authx_port":  "9993",
+`
+使用此库需要配置以上环境变量（左边的）,需要大写 例如 `export DB_USER=root` ,如果不配值则使用以上默认值

@@ -1,15 +1,14 @@
-package main
+package authx
 
 import (
 	"authx/apis"
-	"os"
-
 	"authx/models"
-
 	"authx/settings"
+	"log"
+	"os"
 )
 
-func main() {
+func Run() {
 	// init database
 	_, err := models.SetEngine(&models.Config{
 		User:     settings.Get("db_user"),
@@ -19,8 +18,9 @@ func main() {
 		Log:      settings.Get("db_log"),
 	})
 	if err != nil {
+		log.Fatal("authx链接数据库失败:", err)
 		os.Exit(-1)
 	}
 	// run api server
-	apis.NewAPIServer().G.Run(":9991")
+	apis.NewAPIServer().G.Run(settings.Get("authx_host") + ":" + settings.Get("authx_port"))
 }

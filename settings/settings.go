@@ -14,12 +14,12 @@ func init() {
 		"db_host":     "127.0.0.1:3306",
 		"db_name":     "authx",
 		"db_log":      "xorm.log",
-		"mongo_host":  "127.0.0.1",
-		"admin_host":  "localhost",
+		"authx_host":  "localhost",
+		"authx_port":  "9993",
 	}
 }
 func Get(key string) string {
-	env := strings.TrimSpace(os.Getenv(key))
+	env := strings.TrimSpace(os.Getenv(strings.ToUpper(key)))
 	if env != "" {
 		return env
 	}
