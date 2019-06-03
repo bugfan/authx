@@ -16,6 +16,7 @@ func init() {
 		"db_log":      "xorm.log",
 		"authx_host":  "localhost",
 		"authx_port":  "9993",
+		"jwt_secret":  "", // "" is use random string
 	}
 }
 func Get(key string) string {

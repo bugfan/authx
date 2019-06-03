@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"authx/settings"
 	"errors"
 	"fmt"
 	"math/rand"
@@ -12,6 +13,10 @@ import (
 var secret string
 
 func init() {
+	secret := settings.Get("jwt_secret")
+	if secret != "" {
+		return
+	}
 	letterRunes := []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 	b := make([]rune, 20)
 	for i := range b {

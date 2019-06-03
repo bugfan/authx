@@ -31,5 +31,7 @@
 "db_log":      "xorm.log",
 "authx_host":  "localhost",
 "authx_port":  "9993",
+"jwt_secret":  "", 
 ```
 使用此库需要配置以上环境变量（左边的）,需要大写 例如 `export DB_USER=root` ,如果不配置则使用以上默认值
+如果jwt_secret为空则使用随机字符串当作JWT加解密密钥
