@@ -5,6 +5,8 @@ import (
 	"os"
 
 	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/mattn/go-sqlite3"
+
 	"github.com/go-xorm/core"
 	"github.com/go-xorm/xorm"
 )
@@ -23,6 +25,7 @@ func GetEngine() *xorm.Engine {
 }
 
 type Config struct {
+	Obj      string
 	User     string
 	Password string
 	Host     string
@@ -30,6 +33,9 @@ type Config struct {
 	Log      string
 }
 
+func newSqlite3Engine(config *Config) (*xorm.Engine, error) {
+	return xorm.NewEngine("sqlite3", "./authx.db")
+}
 func newEngine(config *Config) (*xorm.Engine, error) {
 	var cnnstr string
 	if config.Host[0] == '/' { // looks like a unix socket
@@ -58,8 +64,14 @@ func newEngine(config *Config) (*xorm.Engine, error) {
 
 func SetEngine(config *Config) (*xorm.Engine, error) {
 	var err error
-	if x, err = newEngine(config); err != nil {
-		return nil, err
+	if config.Obj == "sqlite3" {
+		if x, err = newSqlite3Engine(config); err != nil {
+			return nil, err
+		}
+	} else {
+		if x, err = newEngine(config); err != nil {
+			return nil, err
+		}
 	}
 
 	if err = x.StoreEngine("InnoDB").Sync2(tables...); err != nil {

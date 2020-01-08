@@ -8,9 +8,11 @@ import (
 	"os"
 )
 
-func Run() {
+// addr --> ip:port --> "127.0.0.1:8080"
+func Run(addr string) {
 	// init database
 	_, err := models.SetEngine(&models.Config{
+		Obj:      settings.Get("db_obj"),
 		User:     settings.Get("db_user"),
 		Password: settings.Get("db_password"),
 		Host:     settings.Get("db_host"),
@@ -22,5 +24,5 @@ func Run() {
 		os.Exit(-1)
 	}
 	// run api server
-	apis.NewAPIServer().G.Run(settings.Get("authx_host") + ":" + settings.Get("authx_port"))
+	apis.NewAPIServer().G.Run(addr)
 }

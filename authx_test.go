@@ -1,9 +1,10 @@
 package authx
 
 import (
+	"authx/settings"
 	"testing"
 )
 
 func TestAuthx(t *testing.T) {
-	Run()
+	Run(settings.Get("authx_host") + ":" + settings.Get("authx_port"))
 }

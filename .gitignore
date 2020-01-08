@@ -12,3 +12,4 @@
 *.out
 xorm.log
 *.log
+*.db
